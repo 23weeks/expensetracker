@@ -9,11 +9,12 @@ import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource
 import org.springframework.stereotype.Component
 import org.springframework.web.filter.OncePerRequestFilter
+import org.springframework.context.annotation.Lazy
 
 @Component
 class JwtAuthenticationFilter(
     private val jwtProvider: JwtProvider,
-    private val userService: UserService
+    @Lazy private val userService: UserService
 ) : OncePerRequestFilter() {
 
     override fun doFilterInternal(
