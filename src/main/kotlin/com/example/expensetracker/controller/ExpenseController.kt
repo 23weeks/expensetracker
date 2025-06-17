@@ -17,7 +17,7 @@ class ExpenseController(
     
     @GetMapping
     fun getExpenses(principal: Principal): ResponseEntity<List<Expense>> {
-        val user = userService.findByUsername(principal.name) ?: return ResponseEntity.notFound().build()
+        val user = userService.findByUsername(principal.name) ?: return ResponseEntity.status(401).build()
         val expenses =  expenseService.getExpensesByUser(user)
         return ResponseEntity.ok(expenses)
     }

@@ -7,6 +7,7 @@ import org.springframework.security.web.SecurityFilterChain
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
+import org.springframework.http.HttpMethod
 import com.example.expensetracker.security.JwtAuthenticationFilter
 
 @Configuration
@@ -17,9 +18,11 @@ class SecurityConfig(
     @Bean
     fun filterChain(http: HttpSecurity): SecurityFilterChain {
         http
+            .cors {}
             .csrf { it.disable() }
             .authorizeHttpRequests {
                 it
+                    .requestMatchers(HttpMethod.OPTIONS).permitAll() // CORS preflight 요청 허용
                     .requestMatchers(
                         "/api/users/signup",
                         "/api/users/login",
